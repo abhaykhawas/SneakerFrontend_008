@@ -10,6 +10,7 @@ function ProductDetails() {
     const [size, setSize] = useState(null)
     const [reviews, setReviews] = useState([])
     const [loadingReviews, setLoadingReviews] = useState(false)
+    const [averageRating, setAverageRating] = useState(0)
 
     useEffect(() => {
         async function load() {
@@ -25,6 +26,12 @@ function ProductDetails() {
             try{
                 const res = await getProductReview(pid)
                 console.log(res.data)
+                let ratingSum = 0
+                res.data.map((review) => {
+                    ratingSum = ratingSum + review.rating
+                })
+                ratingSum = ratingSum/res.data.length
+                setAverageRating(ratingSum || 0)
                 setReviews(res.data || [])
             }
             catch(err) {
@@ -93,8 +100,11 @@ function ProductDetails() {
 
             {/* Review section */}
 
-            <div className='mt-8 border-t p-3'>
-                <h2 className='text-2xl font-bold mb-4'>Reviews</h2>
+            <div className='mt-8 mb-4 border-t p-3'>
+                <div className='flex justify-between items-center'>
+                    <h2 className='text-2xl font-bold'>Reviews</h2>
+                    <p>Average Rating : {averageRating}/5</p>
+                </div>
 
                 {loadingReviews ? (
                     <p className='text-gray-400'>Loading Reviews...</p>
