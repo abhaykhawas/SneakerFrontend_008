@@ -3,7 +3,7 @@ import { getProducts, createProduct, updateProduct, deleteProduct, getAllOrders,
 import { Collapse, Select } from 'antd';
 
 function AdminDashboard() {
-    
+    const [loading, setLoading] = useState(true)
     const [products, setProducts] = useState([])
     const [form, setForm] = useState({name: "", description: "", price: "", category: "", stock: { 5:'', 6:'', 7:'', 8:'', 9:'', 10:'' }, images: []})
     const [editId, setEditId] = useState(null)
@@ -90,7 +90,7 @@ function AdminDashboard() {
                 }
                 setItems(itemsTemp)
                 setProducts(res.data)
-                
+                setLoading(false)
             }
             load()
         }
@@ -140,7 +140,11 @@ function AdminDashboard() {
         load()
     }
 
-  
+    if(loading) {
+        return <div>
+            LOADING...
+        </div>
+    }
 
     return (
         <div className='p-6'>
