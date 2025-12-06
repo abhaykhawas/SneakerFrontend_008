@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API = axios.create({baseURL: "http://localhost:8000/api"})
+const API = axios.create({baseURL: "https://sneakerbackend-008.onrender.com/api"})
 
 // attach the token if exsists
 API.interceptors.request.use((req) => {
